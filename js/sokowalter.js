@@ -42,16 +42,12 @@ SokobanGame = new Class({
 	onKeyDown: function (e) {
 		if (e.shift || e.control || e.alt || e.meta)
 			return true; // ignore key combinations
-		var stop = true; // prevent key event propagation
+		var stop = true;
 		try {
-			switch (e.key) {
-			case 'up': this.level.onMove(0, -1); break;
-			case 'right': this.level.onMove(1, 0); break;
-			case 'down': this.level.onMove(0, 1); break;
-			case 'left': this.level.onMove(-1, 0); break;
-			case 'u': this.level.undo(); break;
-			case 'r': this.level.redo(); break;
-			default: stop = false;
+			if (!this.level.isComplete()) {
+				stop = this.handleKey(e.key);
+			} else {
+				this.loadLevel(null);
 			}
 		} catch (exception) {
 			this.onError(exception);
@@ -62,6 +58,24 @@ SokobanGame = new Class({
 		return true;
 	},
 
+	handleKey: function(key) {
+		var c = false;
+		var stop = true; // prevent key event propagation
+		switch (key) {
+			case 'up': c = this.level.onMove(0, -1); break;
+			case 'right': c = this.level.onMove(1, 0); break;
+			case 'down': c = this.level.onMove(0, 1); break;
+			case 'left': c = this.level.onMove(-1, 0); break;
+			case 'u': this.level.undo(); break;
+			case 'r': this.level.redo(); break;
+			default: stop = false;
+		}
+		if (c) {
+			this.echo('Press any key to continue...');
+		}
+		return stop;
+	}, 
+
 	// Handles exceptions in game (override to customize)
 	onError: function (exception) {
 		if ($type(exception) != 'string') {
@@ -69,8 +83,8 @@ SokobanGame = new Class({
 		} else if (exception == 'YOU WIN!') {
 			alert('\u00a1Ganaste! :)');
 		} else if (exception.contains('Key already lifted')) {
-			alert('\u00a1Eh, loco! \u00bfCuántas llaves del mismo color '
-					+ 'te querés chorear? Late...');
+			alert('\u00a1Eh, loco! \u00bfCuántas llaves del mismo '
+					+ 'color te querés chorear? Late...');
 		} else if (exception.contains('Get the key')) {
 			alert('\u00a1Cerrado! Tenés que conseguir la llavecita '
 					+ 'del mismo color para abrir esta '
@@ -82,6 +96,48 @@ SokobanGame = new Class({
 		} else {
 			alert('Error: ' + exception.toString());
 		}
+	},
+
+	echo: function (message) {
+		alert(message);
+	}
+
+});
+
+/*
+ * Class: SokobanIndexedLevelLoader
+ * -------------------------
+ */
+SokobanIndexedLevelLoader = new Class({
+
+	// Constructor
+	initialize: function (mazeDatabase, container) {
+		this.mazeDatabase = mazeDatabase;
+		this.container = container;
+		this.index = 0;
+	},
+
+	// Loads a level by maze name
+	load: function (mazeIndex) {
+		if (mazeIndex == null) {
+			mazeIndex = ++this.index;
+		}
+		if (mazeIndex >= this.mazeDatabase.length) {
+			throw 'YOU WIN!';
+		}
+		var maze = this.get(mazeIndex);
+		maze.render(this.container);
+		return new SokobanLevel(maze);
+	},
+
+	// Returns a maze from the database by name
+	get: function (mazeIndex) {
+		var mazeData = this.mazeDatabase[mazeIndex];
+		if (!mazeData) {
+			throw 'Failed to load maze by index: ' + mazeIndex;
+		}
+		maze = new SokobanMaze(mazeData);
+		return maze;
 	}
 
 });
@@ -151,6 +207,7 @@ SokobanLevel = new Class({
 	// dx, dy are the coordinate offsets (0, 1 or -1)
 	// options is an optional argument with data for undo/redo moves
 	onMove: function (dx, dy, options) {
+		var retval = false;
 		var sprite = this.spriteTile;
 		var target = this.maze.getTile(sprite.x + dx, sprite.y + dy);
 		if (!target) return;
@@ -209,6 +266,7 @@ SokobanLevel = new Class({
 				}
 				if (this.isComplete()) {
 					this.maze.openExitDoors();
+					retval = true;
 				} else {
 					this.maze.closeExitDoors();
 				}
@@ -235,6 +293,7 @@ SokobanLevel = new Class({
 			}
 			break;
 		}
+		return retval;
 	},
 
 	// Logs a move in the game history
