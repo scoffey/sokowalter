@@ -70,6 +70,16 @@ body {
 	background: url(../dark-images/blue-door.gif) no-repeat left top;
 }
 
+#twitter {
+	line-height: 350%;
+	text-decoration: none;
+	color: white;
+}
+
+#twitter span {
+	line-height: 200%;
+}
+
 #message {
 	margin: 16px;
 	padding: 16px;

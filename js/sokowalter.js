@@ -102,7 +102,7 @@ SokobanGame = new Class({
 	echo: function (message) {
 		$('message').set('text', message);
 	}
-
+	
 });
 
 /*
