@@ -29,6 +29,7 @@ SokobanGame = new Class({
 			var lastLevelName = this.levelName;
 			this.levelName = name;
 			this.level = this.loader.load(name);
+			this.echo('Level ' + this.loader.index);
 			this.level.onExit = this.loadLevel.bind(this);
 			this.level.setKeys(keys);
 			if (lastLevelName)
@@ -99,7 +100,7 @@ SokobanGame = new Class({
 	},
 
 	echo: function (message) {
-		alert(message);
+		$('message').set('text', message);
 	}
 
 });
