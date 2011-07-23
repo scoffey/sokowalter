@@ -240,7 +240,7 @@ SokobanLevel = new Class({
 	// Logs a move in the game history
 	// options is an optional argument for undo data (boxPushed, key, door)
 	logMove: function (dx, dy, options) {
-		if (!options) options = {}
+		if (!options) options = {};
 		var map = {
 			' ': 'urdl', '$': 'URDL',
 			'(': 'vsem', ')': 'VSEM',
@@ -248,7 +248,7 @@ SokobanLevel = new Class({
 			'{': 'xzgo', '}': 'XZGO',
 			'\u00a1': 'abch', '!': 'ABCH',
 			'\u00bf': 'ijkp', '?': 'IJKP'
-		}
+		};
 		var direction = dx ? 2 - dx : dy + 1; // 0: up, 1: right, ...
 		var target = ' ';
 		if (options.boxPushed) target = '$';
@@ -636,7 +636,7 @@ SokobanTile = new Class({
 			'$.': ' *',
 			'* ': '.$',
 			'*.': '.*'
-		}
+		};
 		var t = map[this.state + tile.state];
 		if (!t) throw 'Unknown transition from state "' + this.state
 				+ '" to state "' + tile.state + '" state';
