@@ -12,7 +12,9 @@ SokobanGame = new Class({
 		this.level = null; // currently loaded level
 		this.history = new Array();
 		this.loader = loader;
-		this.setKeyEventHandler(this.onKeyDown.bind(this));
+		var eventName = Browser.Engine.trident || Browser.Engine.webkit
+				? 'keydown' : 'keypress';
+		document.addEvent(eventName, this.onKeyDown.bind(this));
 	},
 
 	// Loads a level by name (and saves previous level history if such)
@@ -54,124 +56,31 @@ SokobanGame = new Class({
 		} catch (exception) {
 			this.onError(exception);
 		}
- 		if (stop) // only for handled key events
+		if (stop) { // only for handled key events
 			e.stop();
+		}
 		return true;
-	},
-
-	// Sets the keydown event handler (override to customize)
-	setKeyEventHandler: function (callback) {
-		var eventName = Browser.Engine.trident || Browser.Engine.webkit
-				? 'keydown' : 'keypress';
-		document.addEvent(eventName, callback);
-		// TODO: this should not be here:
-		var preload = new Asset.images([
-			'images/wall.gif',
-			// '/images/sokoban/floor.gif',
-			'images/sprite.gif',
-			'images/box.gif',
-			'images/goal.gif',
-			'images/sprite-on-goal.gif',
-			'images/box-on-goal.gif',
-			'images/door.gif',
-			'images/closed-door.gif',
-			'images/red-key.gif',
-			'images/green-key.gif',
-			'images/blue-key.gif',
-			'images/red-door.gif',
-			'images/green-door.gif',
-			'images/blue-door.gif'
-		]);
 	},
 
 	// Handles exceptions in game (override to customize)
 	onError: function (exception) {
 		if ($type(exception) != 'string') {
 			alert('Error: ' + exception.toString());
-			return;
-		}
-		if (exception == 'YOU WIN!') {
-		// TODO: this violates private instance variable in loader:
-			var container = $(this.loader.container);
-			container.set('html', '<h3>¡Ganaste!</h3>\n'
-				+ '<p>Enviando resultados...</p>');
-			var request = new Request.JSON({
-				url: '/pra/api/sokoban/submit',
-				onComplete: this.onComplete.bind(this)
-			});
-			request.post({'history': this.history});
+		} else if (exception == 'YOU WIN!') {
+			alert('\u00a1Ganaste! :)');
 		} else if (exception.contains('Key already lifted')) {
-			alert('¡Eh, loco! ¿Cuántas llaves del mismo color '
+			alert('\u00a1Eh, loco! \u00bfCuántas llaves del mismo color '
 					+ 'te querés chorear? Late...');
 		} else if (exception.contains('Get the key')) {
-			alert('¡Cerrado! Tenés que conseguir la llavecita '
+			alert('\u00a1Cerrado! Tenés que conseguir la llavecita '
 					+ 'del mismo color para abrir esta '
 					+ 'puerta.');;
 		} else if (exception.contains('Put all the boxes')) {
-			alert('¡Alto! Tenés que ubicar todas las cajas en '
+			alert('\u00a1Alto! Tenés que ubicar todas las cajas en '
 					+ 'las cruces antes de pasar por '
 					+ 'esta puerta a otro nivel...');
 		} else {
 			alert('Error: ' + exception.toString());
-		}
-	},
-
-	onComplete: function (o) {
-		// TODO: this violates private instance variable in loader:
-		var container = $(this.loader.container);
-		var email = 'soporte@7cerebros.com.ar'
-		var errmsg = '<p>Mandanos un e-mail a <a href="mailto:'
-			+ email + '">' + email + '</a> copiando este código '
-			+ 'si creés que hay un error: <br/>'
-			+ Array.join(this.history, '.\n'); + '</p>';
-		switch (o.status){
-		case('p'): 
-			container.set('html', '<h3>¡Listo!</h3>\n'
-				+ '<p>Tus resultados de este '
-				+ 'problema fueron guardados.<br />\n'
-				+ '<a href="/pra/highscores">Ver la '
-				+ 'la tabla de puntajes</a></p>');
-			//alert(o.username);
-			break;
-		case('f'):
-			container.set('html', '<h3>Historial de '
-				+ 'movimientos inválido</h3>\n' + errmsg);
-			break;
-		case('l'):
-			container.set('html', '<h3>Tu sesión de '
-				+ 'usuario autenticado ha caducado</h3>\n'
-				+ errmsg);
-			break;
-			/*
-			alert('No se encontró un usuario '
-			+ 'logueado! sesión caducó\n\n'
-			+ 'Cuidado, situación extrema');
-			entered_username="";
-			entered_password="";
-			entered_username=prompt("Nombre de usuario:","");
-			entered_username=entered_username.toLowerCase();
-			entered_password=prompt("Password:","");
-			entered_password=entered_password.toLowerCase();
-			
-			alert('asd-'+this.history);
-			var logReq = new Request.JSON({
-				url: '/pra/api/login',
-				onComplete: function (o) {
-				alert("Mandando nuevamente el historial.");
-				alert(this.history);
-				request.post({'history': this.history});
-				}
-			});
-			logReq.post({'username': entered_username,
-				'pwd' : entered_password	
-				});
-							
-			break;
-			*/
-		default:
-			container.set('html', '<h3>Error '
-				+ 'interno del servidor</h3>\n' + errmsg);
-			break;
 		}
 	}
 
@@ -194,8 +103,9 @@ SokobanLevelLoader = new Class({
 
 	// Loads a level by maze name
 	load: function (mazeName) {
-		if (mazeName.toLowerCase() == 'z')
+		if (mazeName.toLowerCase() == 'z') {
 			throw 'YOU WIN!';
+		}
 		var maze = this.get(mazeName);
 		maze.render(this.container);
 		return new SokobanLevel(maze);
@@ -246,7 +156,7 @@ SokobanLevel = new Class({
 		if (!target) return;
 		var state = target.getState();
 		var logOptions = {};
-		if ('([{¡¿'.contains(state)) { // key
+		if ('([{\u00a1\u00bf'.contains(state)) { // key
 			if (this.liftKey(target)) {
 				logOptions.key = state;
 			} else {
@@ -280,7 +190,7 @@ SokobanLevel = new Class({
 				// doors may have to be closed back on undo
 				sprite.setState(options.door);
 				var d = ')]}!?'.indexOf(options.door); 
-				this.keys += '([{¡¿'.charAt(d);
+				this.keys += '([{\u00a1\u00bf'.charAt(d);
 			}
 			this.onStep(sprite, target, logOptions);
 			break;
@@ -336,8 +246,8 @@ SokobanLevel = new Class({
 			'(': 'vsem', ')': 'VSEM',
 			'[': 'wtfn', ']': 'WTFN',
 			'{': 'xzgo', '}': 'XZGO',
-			'¡': 'abch', '!': 'ABCH',
-			'¿': 'ijkp', '?': 'IJKP'
+			'\u00a1': 'abch', '!': 'ABCH',
+			'\u00bf': 'ijkp', '?': 'IJKP'
 		}
 		var direction = dx ? 2 - dx : dy + 1; // 0: up, 1: right, ...
 		var target = ' ';
@@ -364,7 +274,7 @@ SokobanLevel = new Class({
 		var j = Math.floor(i / 4);
 		var options = {};
 		options.boxPushed = (j == 6);
-		options.key = (j > 0 && j < 6) ? '([{¡¿'.charAt(j - 1) : false;
+		options.key = (j > 0 && j < 6) ? '([{\u00a1\u00bf'.charAt(j - 1) : false;
 		options.door = (j > 6) ? ')]}!?'.charAt(j - 7) : false;
 		this.onMove(dx, dy, options);
 		if (options.boxPushed) {
@@ -415,7 +325,7 @@ SokobanLevel = new Class({
 	// Lifts a new key. Returns false if already available or invalid
 	liftKey: function (target) {
 		var key = target.getState();
-		if (!('([{¡¿'.contains(key)) || this.keys.contains(key))
+		if (!('([{\u00a1\u00bf'.contains(key)) || this.keys.contains(key))
 			return false;
 		this.keys += key;
 		target.setState(' '); // allow to move
@@ -455,7 +365,7 @@ SokobanLevel = new Class({
 	// the door is invalid or the sprite hasn't got the key for it.
 	openDoor: function (target) {
 		var door = target.getState();
-		var key = '([{¡¿'.charAt(')]}!?'.indexOf(door));
+		var key = '([{\u00a1\u00bf'.charAt(')]}!?'.indexOf(door));
 		if (!key || !this.keys.contains(key))
 			return false;
 		this.keys = this.keys.replace(key, '');
@@ -652,8 +562,8 @@ SokobanTile = new Class({
 		'(': 'red-key',
 		'[': 'green-key',
 		'{': 'blue-key',
-		'¡': 'yellow-key',
-		'¿': 'violet-key',
+		'\u00a1': 'yellow-key',
+		'\u00bf': 'violet-key',
 		')': 'red-door',
 		']': 'green-door',
 		'}': 'blue-door',
