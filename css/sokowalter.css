@@ -1,14 +1,23 @@
 body {
-	font-family: sans-serif;
+	font-family: 'Geo', sans-serif;
 	background-color: black;
+	width: 940px;
+	margin: 0 auto;
+    text-align: center;
 }
+
+#content {
+	min-height: 480px;
+	text-align: center;
+}
+
 .clear {
 	clear: both;
 }
 #sokoban h3,
 #sokoban p {
 	padding: 16px;
-	color: black;
+	color: white;
 }
 #sokoban div {
 	width: 20px;
@@ -16,47 +25,55 @@ body {
 	float: left;
 }
 #sokoban div.wall {
-	background: url(../images/wall.gif) no-repeat left top;
+	background: url(../dark-images/wall.gif) no-repeat left top;
 }
 #sokoban div.floor {
-	background: url(../images/floor.gif) no-repeat left top;
+	background: url(../dark-images/floor.gif) no-repeat left top;
 }
 #sokoban div.sprite {
-	background: url(../images/sprite.gif) no-repeat left top;
+	background: url(../dark-images/sprite.gif) no-repeat left top;
 }
 #sokoban div.box {
-	background: url(../images/box.gif) no-repeat left top;
+	background: url(../dark-images/box.gif) no-repeat left top;
 }
 #sokoban div.goal {
-	background: url(../images/goal.gif) no-repeat left top;
+	background: url(../dark-images/goal.gif) no-repeat left top;
 }
 #sokoban div.sprite-on-goal {
-	background: url(../images/sprite-on-goal.gif) no-repeat left top;
+	background: url(../dark-images/sprite-on-goal.gif) no-repeat left top;
 }
 #sokoban div.box-on-goal {
-	background: url(../images/box-on-goal.gif) no-repeat left top;
+	background: url(../dark-images/box-on-goal.gif) no-repeat left top;
 }
 #sokoban div.door {
-	background: url(../images/door.gif) no-repeat left top;
+	background: url(../dark-images/door.gif) no-repeat left top;
 }
 #sokoban div.closed {
-	background: url(../images/closed-door.gif) no-repeat left top;
+	background: url(../dark-images/closed-door.gif) no-repeat left top;
 }
 #sokoban div.red-key {
-	background: url(../images/red-key.gif) no-repeat left top;
+	background: url(../dark-images/red-key.gif) no-repeat left top;
 }
 #sokoban div.green-key {
-	background: url(../images/green-key.gif) no-repeat left top;
+	background: url(../dark-images/green-key.gif) no-repeat left top;
 }
 #sokoban div.blue-key {
-	background: url(../images/blue-key.gif) no-repeat left top;
+	background: url(../dark-images/blue-key.gif) no-repeat left top;
 }
 #sokoban div.red-door {
-	background: url(../images/red-door.gif) no-repeat left top;
+	background: url(../dark-images/red-door.gif) no-repeat left top;
 }
 #sokoban div.green-door {
-	background: url(../images/green-door.gif) no-repeat left top;
+	background: url(../dark-images/green-door.gif) no-repeat left top;
 }
 #sokoban div.blue-door {
-	background: url(../images/blue-door.gif) no-repeat left top;
+	background: url(../dark-images/blue-door.gif) no-repeat left top;
+}
+
+#message {
+	margin: 16px;
+	padding: 16px;
+	display: block;
+	background: #ffea2f;
+	float: none;
 }

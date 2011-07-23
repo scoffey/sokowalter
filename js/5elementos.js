@@ -12,7 +12,7 @@ window.addEvent('domready', function () {
 // Maze database (array of strings that indicate tile states)
 // TODO: store sokoban maze data (XSB) in run length encoding (RLE)
 var mazeDatabase = {
-		a: '####|#@.#|#$ #|#  #|# $#|#. #|#  #|####',
+		a: '####|#@.#|#  #|# $#|#  #|#  #|#  #|#Z##',
 
 		b: '#####|#  .#|# $ #|##@##|##$##|#   #|#.  #|#####',
 
