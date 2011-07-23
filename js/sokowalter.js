@@ -80,22 +80,23 @@ SokobanGame = new Class({
 	// Handles exceptions in game (override to customize)
 	onError: function (exception) {
 		if ($type(exception) != 'string') {
-			alert('Error: ' + exception.toString());
+			this.echo('Error: ' + exception.toString());
 		} else if (exception == 'YOU WIN!') {
-			alert('\u00a1Ganaste! :)');
+			this.echo('\u00a1Ganaste! :)');
 		} else if (exception.contains('Key already lifted')) {
-			alert('\u00a1Eh, loco! \u00bfCuántas llaves del mismo '
-					+ 'color te querés chorear? Late...');
+			this.echo('\u00a1Eh, loco! \u00bfCuántas llaves del '
+					+ 'mismo color te querés chorear? '
+					+ 'Late...');
 		} else if (exception.contains('Get the key')) {
-			alert('\u00a1Cerrado! Tenés que conseguir la llavecita '
-					+ 'del mismo color para abrir esta '
-					+ 'puerta.');;
+			this.echo('\u00a1Cerrado! Tenés que conseguir la '
+					+ 'llave del mismo color para abrir '
+					+ 'esta puerta.');;
 		} else if (exception.contains('Put all the boxes')) {
-			alert('\u00a1Alto! Tenés que ubicar todas las cajas en '
-					+ 'las cruces antes de pasar por '
-					+ 'esta puerta a otro nivel...');
+			this.echo('\u00a1Alto! Tenés que ubicar todas las '
+					+ 'cajas en las cruces antes de pasar '
+					+ 'por esta puerta a otro nivel...');
 		} else {
-			alert('Error: ' + exception.toString());
+			this.echo('Error: ' + exception.toString());
 		}
 	},
 
@@ -326,6 +327,7 @@ SokobanLevel = new Class({
 		if (this.moveCount < 1)
 			return false;
 		this.moveCount--;
+		var allKeys = '([{\u00a1\u00bf';
 		var log = this.moveHistory.charAt(this.moveCount);
 		var map = 'urdlvsemwtfnxzgoabchijkpURDLVSEMWTFNXZGOABCHIJKP';
 		var i = map.indexOf(log);
@@ -334,7 +336,7 @@ SokobanLevel = new Class({
 		var j = Math.floor(i / 4);
 		var options = {};
 		options.boxPushed = (j == 6);
-		options.key = (j > 0 && j < 6) ? '([{\u00a1\u00bf'.charAt(j - 1) : false;
+		options.key = (j > 0 && j < 6) ? allKeys.charAt(j - 1) : false;
 		options.door = (j > 6) ? ')]}!?'.charAt(j - 7) : false;
 		this.onMove(dx, dy, options);
 		if (options.boxPushed) {
@@ -385,7 +387,8 @@ SokobanLevel = new Class({
 	// Lifts a new key. Returns false if already available or invalid
 	liftKey: function (target) {
 		var key = target.getState();
-		if (!('([{\u00a1\u00bf'.contains(key)) || this.keys.contains(key))
+		var allKeys = '([{\u00a1\u00bf';
+		if (!allKeys.contains(key) || this.keys.contains(key))
 			return false;
 		this.keys += key;
 		target.setState(' '); // allow to move
