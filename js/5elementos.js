@@ -8,12 +8,12 @@ window.addEvent('domready', function () {
 	var lastLevel = (Cookie.read('sokowalter') || '0').toInt();
 	var loader = new SokobanIndexedLevelLoader(mazeDatabase, 'sokoban');
 	sokoban = new SokobanGame(loader);
-	sokoban.loadLevel(0);
 	$('message').set('html', 'a game developed by '
 			+ '<a href="http://twitter.com/maraoz">maraoz</a> and '
 			+ '<a href="http://twitter.com/scoffey">scoffey</a>');
 	
-	var run = function () {
+	var run = function (level) {
+		sokoban.loadLevel(level);
 		$('splashscreen').setStyle('display', 'none');
 		$('content').setStyle('display', 'block');
 	};
@@ -21,7 +21,7 @@ window.addEvent('domready', function () {
 	$('start').addEvent('click', function () {
 		if (!lastLevel || confirm('Are you sure you want to start a new game? ' +
 				'Previous progress to level '+(lastLevel+1)+' will be lost.')) {
-			run();
+			run(0);
 		}
 	});
 	
@@ -30,7 +30,7 @@ window.addEvent('domready', function () {
 	$('resume').addEvent('click', function (e) {
 		if (lastLevel) {
 			sokoban.loadLevel(lastLevel);
-			run();
+			run(lastLevel);
 		}
 	});
 
