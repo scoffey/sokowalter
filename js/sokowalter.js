@@ -30,10 +30,12 @@ SokobanGame = new Class({
 			this.levelName = name;
 			this.level = this.loader.load(name);
 			this.echo('Level ' + this.loader.index);
+			Cookie.write('sokowalter', this.loader.index);
 			this.level.onExit = this.loadLevel.bind(this);
 			this.level.setKeys(keys);
-			if (lastLevelName)
+			if (lastLevelName) {
 				this.level.setSpriteCloseTo(lastLevelName);
+			}
 		} catch (exception) {
 			this.onError(exception);
 		}
@@ -82,19 +84,10 @@ SokobanGame = new Class({
 		if ($type(exception) != 'string') {
 			this.echo('Error: ' + exception.toString());
 		} else if (exception == 'YOU WIN!') {
-			this.echo('\u00a1Ganaste! :)');
-		} else if (exception.contains('Key already lifted')) {
-			this.echo('\u00a1Eh, loco! \u00bfCuántas llaves del '
-					+ 'mismo color te querés chorear? '
-					+ 'Late...');
-		} else if (exception.contains('Get the key')) {
-			this.echo('\u00a1Cerrado! Tenés que conseguir la '
-					+ 'llave del mismo color para abrir '
-					+ 'esta puerta.');;
-		} else if (exception.contains('Put all the boxes')) {
-			this.echo('\u00a1Alto! Tenés que ubicar todas las '
-					+ 'cajas en las cruces antes de pasar '
-					+ 'por esta puerta a otro nivel...');
+			this.echo('You win! Walter is happy :)');
+		//} else if (exception.contains('Key already lifted')) {
+		//} else if (exception.contains('Get the key')) {
+		//} else if (exception.contains('Put all the boxes')) {
 		} else {
 			this.echo('Error: ' + exception.toString());
 		}

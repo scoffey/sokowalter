@@ -10,16 +10,20 @@ window.addEvent('domready', function () {
 	sokoban.loadLevel(0);
 	
 	$('start').addEvent('click', function () {
-		$('content').setStyle('display', 'block');
+		var level = Cookie.read('sokowalter').toInt();
+		if (level && confirm('Resume last game?')) {
+			sokoban.loadLevel(level);
+		}
 		$('splashscreen').setStyle('display', 'none');
+		$('content').setStyle('display', 'block');
 	});
 
 	$('twitter').addEvent('click', function () {
 		var level = sokoban.loader.index;
-		var status = "I reached level "+level+" in sokowalter! http://scoffey.github.com/sokowalter/";
-		var url = "http://twitter.com/?status="+escape(status);
+		var status = 'I reached level ' + level + ' in sokowalter! '
+				+ 'http://scoffey.github.com/sokowalter/';
+		var url = 'http://twitter.com/?status=' + escape(status);
 		window.open(url, '_blank');
-		
 	});
 	
 });
