@@ -8,6 +8,9 @@ window.addEvent('domready', function () {
 	var loader = new SokobanIndexedLevelLoader(mazeDatabase, 'sokoban');
 	sokoban = new SokobanGame(loader);
 	sokoban.loadLevel(0);
+	$('message').set('html', 'a game developed by '
+			+ '<a href="http://twitter.com/maraoz">maraoz</a> and '
+			+ '<a href="http://twitter.com/scoffey">scoffey</a>');
 	
 	$('start').addEvent('click', function () {
 		var level = Cookie.read('sokowalter').toInt();

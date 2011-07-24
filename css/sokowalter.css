@@ -12,6 +12,10 @@ body {
 	font-size: 12pt;
 }
 
+#topbar a {
+	color: black;
+}
+
 #message {
 	padding: 0 24px;
 }
