@@ -15,14 +15,30 @@
 </head>
 
 <body>
-	<div id="content">
-		<div id="sokoban"></div>
+
+	<div id="splashscreen">
+		<h1>sokowalter</h1>
+		<h2>Walter's Epic Sokoban Challenge!</h2>
+		<p>
+			<img src="dark-images/sprite.gif" />
+			<img src="dark-images/box.gif" />
+			<img src="dark-images/goal.gif" />
+			<img src="dark-images/box-on-goal.gif" />
+			<img src="dark-images/wall.gif" />
+			<img src="dark-images/sprite-on-goal.gif" style="display: none;" />
+		</p>
+		<p>Help Walter push the boxes onto the goals.</p>
+		<p>Use the arrow keys to move; U to undo; R to redo.</p>
+		<p><a id="start" href="javascript:void(0);">Start game</a> - <a href="javascript:alert('Coming soon!');">Resume game</a></p>
 	</div>
+
+	<div id="content" style="display: none;">
+	<div id="sokoban"></div>
 	<div id="message" class="clear"></div>
 	<div>
-		<a id="twitter" href="#"><img title="Tweet your progress!" src="images/twitter_16.png"/></a>
+		<a id="twitter" href="javascript:void(0);"><img title="Tweet your progress!" src="images/twitter_16.png"/></a>
 	</div>
-	
+	</div>	
 	
 </body>
 

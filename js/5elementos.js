@@ -9,6 +9,11 @@ window.addEvent('domready', function () {
 	sokoban = new SokobanGame(loader);
 	sokoban.loadLevel(0);
 	
+	$('start').addEvent('click', function () {
+		$('content').setStyle('display', 'block');
+		$('splashscreen').setStyle('display', 'none');
+	});
+
 	$('twitter').addEvent('click', function () {
 		var level = sokoban.loader.index;
 		var status = "I reached level "+level+" in sokowalter! http://scoffey.github.com/sokowalter/";

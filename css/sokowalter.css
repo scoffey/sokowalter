@@ -3,10 +3,18 @@ body {
 	background-color: black;
 	width: 940px;
 	margin: 0 auto;
-    text-align: center;
+	text-align: center;
 }
 
-#content {
+#splashscreen {
+	color: #ffea2f;
+	font-size: 200%;
+}
+#splashscreen a {
+	color: #9f8a0f;
+}
+
+#sokoban {
 	min-height: 480px;
 	text-align: center;
 }
@@ -28,7 +36,7 @@ body {
 	background: url(../dark-images/wall.gif) no-repeat left top;
 }
 #sokoban div.floor {
-	background: url(../dark-images/floor.gif) no-repeat left top;
+	/* background: url(../dark-images/floor.gif) no-repeat left top; */
 }
 #sokoban div.sprite {
 	background: url(../dark-images/sprite.gif) no-repeat left top;
@@ -45,6 +53,7 @@ body {
 #sokoban div.box-on-goal {
 	background: url(../dark-images/box-on-goal.gif) no-repeat left top;
 }
+/*
 #sokoban div.door {
 	background: url(../dark-images/door.gif) no-repeat left top;
 }
@@ -69,6 +78,7 @@ body {
 #sokoban div.blue-door {
 	background: url(../dark-images/blue-door.gif) no-repeat left top;
 }
+*/
 
 #twitter {
 	line-height: 350%;
