@@ -5,7 +5,7 @@ var sokoban = null; // global variable for the sokoban game
 
 window.addEvent('domready', function () {
 	// loader and game setup
-	var lastLevel = Cookie.read('sokowalter').toInt();
+	var lastLevel = (Cookie.read('sokowalter') || '0').toInt();
 	var loader = new SokobanIndexedLevelLoader(mazeDatabase, 'sokoban');
 	sokoban = new SokobanGame(loader);
 	sokoban.loadLevel(0);
