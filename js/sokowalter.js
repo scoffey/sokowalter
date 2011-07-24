@@ -88,7 +88,7 @@ SokobanGame = new Class({
 			var s = left == 1? '':'s';
 			this.echo(this.levelMessage() + ' / ' + total
 				+ ' complete. ' + left + ' level'+ s +' to go. '
-				+ 'Press any key to continue...');
+				+ 'Game saved! Press any key to continue...');
 		}
 		return stop;
 	}, 

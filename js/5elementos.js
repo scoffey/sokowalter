@@ -13,13 +13,26 @@ window.addEvent('domready', function () {
 			+ '<a href="http://twitter.com/maraoz">maraoz</a> and '
 			+ '<a href="http://twitter.com/scoffey">scoffey</a>');
 	
-	$('start').addEvent('click', function () {
-		if (lastLevel && confirm('Resume last game?')) {
-			sokoban.loadLevel(lastLevel);
-		}
+	var run = function () {
 		$('splashscreen').setStyle('display', 'none');
 		$('content').setStyle('display', 'block');
-	}); 
+	};
+	
+	$('start').addEvent('click', function () {
+		if (!lastLevel || confirm('Are you sure you want to start a new game? ' +
+				'Previous progress to level '+(lastLevel+1)+' will be lost.')) {
+			run();
+		}
+	});
+	
+	if (!lastLevel)	$('resume').addClass('disabled');
+	
+	$('resume').addEvent('click', function (e) {
+		if (lastLevel) {
+			sokoban.loadLevel(lastLevel);
+			run();
+		}
+	});
 
 	$('twitter').addEvent('click', function () {
 		var level = sokoban.loader.index;
