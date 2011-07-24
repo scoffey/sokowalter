@@ -19,7 +19,7 @@ window.addEvent('domready', function () {
 		}
 		$('splashscreen').setStyle('display', 'none');
 		$('content').setStyle('display', 'block');
-	});
+	}); 
 
 	$('twitter').addEvent('click', function () {
 		var level = sokoban.loader.index;

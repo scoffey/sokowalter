@@ -172,7 +172,7 @@ SokobanLevelLoader = new Class({
 	load: function (mazeName) {
 		if (mazeName.toLowerCase() == 'z') {
 			throw 'YOU WIN!';
-		}
+		} 
 		var maze = this.get(mazeName);
 		maze.render(this.container);
 		return new SokobanLevel(maze);
