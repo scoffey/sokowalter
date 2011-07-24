@@ -29,8 +29,12 @@ SokobanGame = new Class({
 			var lastLevelName = this.levelName;
 			this.levelName = name;
 			this.level = this.loader.load(name);
-			this.echo('Level ' + this.loader.index);
+
+			// TODO: de-couple this custom logic
+			this.echo('Level ' + this.loader.index + ' / '
+				+ this.loader.mazeDatabase.length);
 			Cookie.write('sokowalter', this.loader.index);
+
 			this.level.onExit = this.loadLevel.bind(this);
 			this.level.setKeys(keys);
 			if (lastLevelName) {
@@ -74,7 +78,12 @@ SokobanGame = new Class({
 			default: stop = false;
 		}
 		if (c) {
-			this.echo('Press any key to continue...');
+			var total = this.loader.mazeDatabase.length;
+			var current = this.loader.index;
+			var left = total - current;
+			this.echo('Level ' +  current + ' / ' + total
+				+ ' complete. ' + left + ' levels to go. '
+				+ 'Press any key to continue...');
 		}
 		return stop;
 	}, 
@@ -116,6 +125,8 @@ SokobanIndexedLevelLoader = new Class({
 	load: function (mazeIndex) {
 		if (mazeIndex == null) {
 			mazeIndex = ++this.index;
+		} else {
+			this.index = mazeIndex;
 		}
 		if (mazeIndex >= this.mazeDatabase.length) {
 			throw 'YOU WIN!';
@@ -401,6 +412,7 @@ SokobanLevel = new Class({
 	// Moves the sprite to a free tile adjacent to the first one with
 	// the given state code (case insensitive comparison)
 	setSpriteCloseTo: function (state) {
+		if (!state) return;
 		var tile = this.maze.findTile(state);
 		if (!tile) return;
 		var target = null;

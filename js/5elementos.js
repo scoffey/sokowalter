@@ -5,6 +5,7 @@ var sokoban = null; // global variable for the sokoban game
 
 window.addEvent('domready', function () {
 	// loader and game setup
+	var lastLevel = Cookie.read('sokowalter').toInt();
 	var loader = new SokobanIndexedLevelLoader(mazeDatabase, 'sokoban');
 	sokoban = new SokobanGame(loader);
 	sokoban.loadLevel(0);
@@ -13,9 +14,8 @@ window.addEvent('domready', function () {
 			+ '<a href="http://twitter.com/scoffey">scoffey</a>');
 	
 	$('start').addEvent('click', function () {
-		var level = Cookie.read('sokowalter').toInt();
-		if (level && confirm('Resume last game?')) {
-			sokoban.loadLevel(level);
+		if (lastLevel && confirm('Resume last game?')) {
+			sokoban.loadLevel(lastLevel);
 		}
 		$('splashscreen').setStyle('display', 'none');
 		$('content').setStyle('display', 'block');
