@@ -16,6 +16,13 @@
 
 <body>
 
+	<div id="topbar">
+		<div class="inner">
+			<span>sokowalter</span>
+			<span id="message"></span>
+		</div>
+	</div>
+
 	<div id="splashscreen">
 		<h1>sokowalter</h1>
 		<h2>Walter's Epic Sokoban Challenge!</h2>
@@ -29,16 +36,17 @@
 		</p>
 		<p>Help Walter push the boxes onto the goals.</p>
 		<p>Use the arrow keys to move; U to undo; R to redo.</p>
-		<p><a id="start" href="javascript:void(0);">Start game</a> - <a href="javascript:alert('Coming soon!');">Resume game</a></p>
+		<p><a id="start" href="javascript:void(0);">Start game</a></p>
 	</div>
 
 	<div id="content" style="display: none;">
-	<div id="sokoban"></div>
-	<div id="message" class="clear"></div>
-	<div>
-		<a id="twitter" href="javascript:void(0);"><img title="Tweet your progress!" src="images/twitter_16.png"/></a>
+		<div id="sokoban"></div>
 	</div>
-	</div>	
+
+	<div id="socialbar">
+		<iframe src="http://www.facebook.com/plugins/like.php?app_id=236077019748637&amp;href=http%3A%2F%2Fscoffey.github.com%2Fsokowalter%2F&amp;send=false&amp;layout=standard&amp;width=650&amp;show_faces=true&amp;action=like&amp;colorscheme=dark&amp;font&amp;height=40" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:650px; height:40px; float: left;" allowTransparency="true"></iframe>
+		<p id="twitter"><a href="javascript:void(0);"><img title="Tweet your progress!" src="images/twitter_16.png"/><span>Tweet your progress!</span></a></p>
+	</div>
 	
 </body>
 

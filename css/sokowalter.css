@@ -1,6 +1,55 @@
 body {
 	font-family: 'Geo', sans-serif;
 	background-color: black;
+	margin: 0;
+}
+
+#topbar {
+	background-color: #ffea2f;
+	color: black;
+	margin: 0;
+	padding: 8px;
+	font-size: 12pt;
+}
+
+#message {
+	padding: 0 24px;
+}
+
+#topbar div.inner {
+	width: 940px;
+	margin: 0 auto;
+}
+
+#socialbar {
+	height: 40px;
+	width: 940px;
+	margin: 120px auto 0 auto;
+	bottom: 0;
+}
+
+#twitter {
+	height: 40px;
+	width: 180px;
+	float: left;
+	text-align: right;
+	margin: 0;
+	padding: 0;
+}
+
+#twitter a {
+	color: gray;
+	font-family: Helvetica, sans-serif;
+	font-size: 9pt;
+	text-decoration: none;
+}
+#twitter img {
+	margin: 0 8px;
+	vertical-align: text-bottom;
+}
+
+#splashscreen,
+#content {
 	width: 940px;
 	margin: 0 auto;
 	text-align: center;
@@ -8,21 +57,24 @@ body {
 
 #splashscreen {
 	color: #ffea2f;
-	font-size: 200%;
+	font-size: 160%;
 }
 #splashscreen a {
-	color: #9f8a0f;
+	color: black;
+	background-color: #ffea2f;
+	padding: 10px 20px;
+	text-decoration: none;
 }
 
 #sokoban {
 	min-height: 480px;
 	text-align: center;
+	margin: 0 auto;
 }
 
 .clear {
 	clear: both;
 }
-#sokoban h3,
 #sokoban p {
 	padding: 16px;
 	color: white;
@@ -79,21 +131,3 @@ body {
 	background: url(../dark-images/blue-door.gif) no-repeat left top;
 }
 */
-
-#twitter {
-	line-height: 350%;
-	text-decoration: none;
-	color: white;
-}
-
-#twitter span {
-	line-height: 200%;
-}
-
-#message {
-	margin: 16px;
-	padding: 16px;
-	display: block;
-	background: #ffea2f;
-	float: none;
-}
