@@ -31,7 +31,7 @@ SokobanGame = new Class({
 			this.level = this.loader.load(name);
 
 			// TODO: de-couple this custom logic
-			this.echo('Level ' + this.loader.index + ' / '
+			this.echo(this.levelMessage() + ' / '
 				+ this.loader.mazeDatabase.length);
 			Cookie.write('sokowalter', this.loader.index);
 
@@ -43,6 +43,10 @@ SokobanGame = new Class({
 		} catch (exception) {
 			this.onError(exception);
 		}
+	},
+	
+	levelMessage : function() {
+		return 'Level ' + (this.loader.index+1);
 	},
 
 	// Key event handler for arrow keys and undo/reset keys
@@ -80,9 +84,10 @@ SokobanGame = new Class({
 		if (c) {
 			var total = this.loader.mazeDatabase.length;
 			var current = this.loader.index;
-			var left = total - current;
-			this.echo('Level ' +  current + ' / ' + total
-				+ ' complete. ' + left + ' levels to go. '
+			var left = total - current -1;
+			var s = left == 1? '':'s';
+			this.echo(this.levelMessage() + ' / ' + total
+				+ ' complete. ' + left + ' level'+ s +' to go. '
 				+ 'Press any key to continue...');
 		}
 		return stop;
