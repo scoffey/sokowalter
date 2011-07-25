@@ -51,8 +51,12 @@ SokobanGame = new Class({
 
 	// Key event handler for arrow keys and undo/reset keys
 	onKeyDown: function (e) {
-		if (e.shift || e.control || e.alt || e.meta)
+		if (e.shift || e.control || e.alt || e.meta) {
 			return true; // ignore key combinations
+		}
+		if (!this.level) {
+			return true; // ignore splash screen and similar...
+		}
 		var stop = true;
 		try {
 			if (!this.level.isComplete()) {
@@ -88,7 +92,7 @@ SokobanGame = new Class({
 			var s = left == 1? '':'s';
 			this.echo(this.levelMessage() + ' / ' + total
 				+ ' complete. ' + left + ' level'+ s +' to go. '
-				+ 'Game saved! Press any key to continue...');
+				+ 'Press any key to continue...');
 		}
 		return stop;
 	}, 
