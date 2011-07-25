@@ -579,7 +579,7 @@ SokobanMaze = new Class({
 
 	// Finds the first tile with the given state code (case insensitive)
 	findTile: function (state) {
-		state = state.toLowerCase();
+		state = (state + '').toLowerCase();
 		for (var i = 0; i < this.matrix.length; i++) {
 			if (this.matrix[i].getState().toLowerCase() == state)
 				return this.matrix[i];

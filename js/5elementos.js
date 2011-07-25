@@ -25,8 +25,12 @@ window.addEvent('domready', function () {
 		}
 	});
 	
-	if (!lastLevel)	$('resume').addClass('disabled');
-	
+	if (!lastLevel)	{
+		$('resume').addClass('disabled');
+	} else {
+		$('resume').set('text', 'Resume Level '+(lastLevel+1));
+	}
+		
 	$('resume').addEvent('click', function (e) {
 		if (lastLevel) {
 			sokoban.loadLevel(lastLevel);
