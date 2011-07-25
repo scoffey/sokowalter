@@ -9,7 +9,7 @@ body {
 	color: black;
 	margin: 0;
 	padding: 8px;
-	font-size: 12pt;
+	font-size: 16pt;
 }
 
 #topbar a {
@@ -63,16 +63,18 @@ body {
 	color: #ffea2f;
 	font-size: 160%;
 }
+
 #splashscreen a {
 	color: black;
 	background-color: #ffea2f;
 	padding: 10px 20px;
 	text-decoration: none;
+	margin: 10px;
 }
 
 #splashscreen a.disabled {
-	color: #222;
-	background-color: #FFF06B;
+	color: #666666;
+	background-color: #333333;
 }
 
 #sokoban {
