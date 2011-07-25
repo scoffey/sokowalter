@@ -39,7 +39,7 @@ window.addEvent('domready', function () {
 	});
 
 	$('twitter').addEvent('click', function () {
-		var level = sokoban.loader.index;
+		var level = (Cookie.read('sokowalter') || '0').toInt() + 1;
 		var status = 'I reached level ' + level + ' in sokowalter! '
 				+ 'http://scoffey.github.com/sokowalter/';
 		var url = 'http://twitter.com/?status=' + escape(status);
